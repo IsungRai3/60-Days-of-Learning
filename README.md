@@ -13,3 +13,5 @@ Implemented login attempts logic
 Added Update and Delete functionality
 Completed full CRUD operations (Create, Read, Update, Delete)
 Improved logic and user handling
+✅ Day 5
+Refactored code using functions
