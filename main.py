@@ -2,8 +2,15 @@ users = []
 
 #FUNCTIONS
 def register_user():
-    username = input("Enter username: ")
-    password = input("Enter password: ")
+    username = input("Enter username: ").strip()
+    password = input("Enter password: ").strip()
+
+    if username == "":
+        print("Username cannot be empty!")
+        return
+    if password == "":
+        print("Password cannot be empty!")
+        return
 
     for user in users:
         if user["username"] == username:
@@ -22,8 +29,12 @@ def login_user():
         return
         
     while attempt > 0:
-        username = input("Enter username: ")
-        password = input("Enter password: ")
+        username = input("Enter username: ").strip()
+        password = input("Enter password: ").strip()
+
+        if username == "" or password == "":
+            print("Fields cannot be empty!")
+            continue
 
         for user in users:
             if user["username"] == username and user["password"] == password:
@@ -37,18 +48,25 @@ def login_user():
 
 def user_view():
     if users:
-        print("\n---User---")
+        print("\n--- USERS ---")
         for i, user in enumerate(users, start=1):
             print(f"{i}. {user['username']}")
     else:
         print("No registered user!")
     
 def user_update():
-    username = input("Enter username: ")
+    username = input("Enter username: ").strip()
+
+    if username == "":
+        print("Username cannot be empty!")
+        return
 
     for user in users:
         if user["username"] == username:
-            new_pass = input("Enter new password: ")
+            new_pass = input("Enter new password: ").strip()
+            if new_pass == "":
+                print("Password cannot be empty!")
+                return
             user["password"] = new_pass
             print("User updated successfully!")
             return
@@ -56,7 +74,7 @@ def user_update():
         print("User not found!")
     
 def user_remove():
-    username = input("Enter username: ")
+    username = input("Enter username: ").strip()
 
     for user in users:
         if user["username"] == username:
