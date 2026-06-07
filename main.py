@@ -1,6 +1,15 @@
-users = []
+import json
 
+try:
+    with open("user.json", "r") as f:
+        users = json.load(f)
+except FileNotFoundError:
+    users = []
 #FUNCTIONS
+def save_user():
+    with open("user.json", "w") as f:
+        json.dump(users, f, indent=4)
+
 def register_user():
     username = input("Enter username: ").strip()
     password = input("Enter password: ").strip()
@@ -18,6 +27,7 @@ def register_user():
             return
     else:
         users.append({"username":username, "password":password})
+        save_user()
         print("User registered successfully!")
     
 def login_user():
@@ -68,6 +78,7 @@ def user_update():
                 print("Password cannot be empty!")
                 return
             user["password"] = new_pass
+            save_user()
             print("User updated successfully!")
             return
     else:
@@ -79,6 +90,7 @@ def user_remove():
     for user in users:
         if user["username"] == username:
             users.remove(user)
+            save_user()
             print("User deleted successfully!")
             return
     else:
