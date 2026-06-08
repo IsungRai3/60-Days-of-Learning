@@ -1,13 +1,17 @@
 import json
+import hashlib
 
 try:
-    with open("user.json", "r") as f:
+    with open("users.json", "r") as f:
         users = json.load(f)
 except FileNotFoundError:
     users = []
 #FUNCTIONS
-def save_user():
-    with open("user.json", "w") as f:
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def save_users():
+    with open("users.json", "w") as f:
         json.dump(users, f, indent=4)
 
 def register_user():
@@ -20,6 +24,7 @@ def register_user():
     if password == "":
         print("Password cannot be empty!")
         return
+    password = hash_password(password)
 
     for user in users:
         if user["username"] == username:
@@ -27,7 +32,7 @@ def register_user():
             return
     else:
         users.append({"username":username, "password":password})
-        save_user()
+        save_users()
         print("User registered successfully!")
     
 def login_user():
@@ -45,9 +50,9 @@ def login_user():
         if username == "" or password == "":
             print("Fields cannot be empty!")
             continue
-
+        hashed_pass = hash_password(password)
         for user in users:
-            if user["username"] == username and user["password"] == password:
+            if user["username"] == username and user["password"] == hashed_pass:
                 print(f"Welcome {username}!")
                 return
         attempt -= 1
@@ -77,8 +82,8 @@ def user_update():
             if new_pass == "":
                 print("Password cannot be empty!")
                 return
-            user["password"] = new_pass
-            save_user()
+            user["password"] = hash_password(new_pass)
+            save_users()
             print("User updated successfully!")
             return
     else:
@@ -90,7 +95,7 @@ def user_remove():
     for user in users:
         if user["username"] == username:
             users.remove(user)
-            save_user()
+            save_users()
             print("User deleted successfully!")
             return
     else:

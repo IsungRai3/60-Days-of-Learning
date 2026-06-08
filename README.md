@@ -15,3 +15,9 @@ Completed full CRUD operations (Create, Read, Update, Delete)
 Improved logic and user handling
 ✅ Day 5
 Refactored code using functions
+✅Day 6
+Improved the user system with input validation and better error handling.
+✅Day 7
+Implemented JSON-based data persistence to store and load users permanently.
+✅Day 8
+Secured the system by adding password hashing using SHA-256.
