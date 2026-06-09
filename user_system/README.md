@@ -21,3 +21,18 @@ Improved the user system with input validation and better error handling.
 Implemented JSON-based data persistence to store and load users permanently.
 ✅Day 8
 Secured the system by adding password hashing using SHA-256.
+✅Day 9 – Project Refactoring & Structure
+
+Refactored the user authentication system into a modular structure by separating concerns into multiple files:
+
+* `main.py` → Handles menu and user interaction
+* `auth.py` → Contains authentication and user management logic
+* `storage.py` → Manages data persistence using JSON
+
+Key improvements:
+
+* Implemented clean code structure
+* Improved maintainability and readability
+* Applied modular backend design principles
+
+This marks a transition from simple scripts to structured backend development.

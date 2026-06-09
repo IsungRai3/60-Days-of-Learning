@@ -1,20 +1,10 @@
-import json
 import hashlib
+from storage import save_users
 
-try:
-    with open("users.json", "r") as f:
-        users = json.load(f)
-except FileNotFoundError:
-    users = []
-#FUNCTIONS
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-def save_users():
-    with open("users.json", "w") as f:
-        json.dump(users, f, indent=4)
-
-def register_user():
+def register_user(users):
     username = input("Enter username: ").strip()
     password = input("Enter password: ").strip()
 
@@ -32,10 +22,10 @@ def register_user():
             return
     else:
         users.append({"username":username, "password":password})
-        save_users()
+        save_users(users)
         print("User registered successfully!")
     
-def login_user():
+def login_user(users):
 
     attempt = 3
 
@@ -61,7 +51,7 @@ def login_user():
     if attempt == 0:
         print("Too many failed attempts! Access denied.")
 
-def user_view():
+def user_view(users):
     if users:
         print("\n--- USERS ---")
         for i, user in enumerate(users, start=1):
@@ -69,7 +59,7 @@ def user_view():
     else:
         print("No registered user!")
     
-def user_update():
+def user_update(users):
     username = input("Enter username: ").strip()
 
     if username == "":
@@ -83,54 +73,20 @@ def user_update():
                 print("Password cannot be empty!")
                 return
             user["password"] = hash_password(new_pass)
-            save_users()
+            save_users(users)
             print("User updated successfully!")
             return
     else:
         print("User not found!")
     
-def user_remove():
+def user_remove(users):
     username = input("Enter username: ").strip()
 
     for user in users:
         if user["username"] == username:
             users.remove(user)
-            save_users()
+            save_users(users)
             print("User deleted successfully!")
             return
     else:
         print("User not found!")
-
-
-while True:
-    print("\n=== MENU ===")
-    print("1.Register user")
-    print("2.Login")
-    print("3.View all users")
-    print("4.Update user")
-    print("5.Delete user")
-    print("6.Exit")
-
-    choice = input("Enter your choice: ")
-
-    if choice == "1":
-        register_user()
-        
-    elif choice == "2":
-        login_user()
-
-    elif choice == "3":
-        user_view()
-
-    elif choice == "4":
-        user_update()
-
-    elif choice == "5":
-        user_remove()
-
-    elif choice == "6":
-        print("Exiting program...")
-        break
-    else:
-        print("Error: Invalid choice! Try again!")
-        
