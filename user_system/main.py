@@ -1,5 +1,5 @@
 from storage import load_users
-from auth import register_user, login_user, user_view, user_update, user_remove
+from auth import register_user, login_user, user_view, user_update, user_remove, dashboard
 
 users = load_users()
 
@@ -18,7 +18,9 @@ while True:
         register_user(users)
         
     elif choice == "2":
-        login_user(users)
+        user = login_user(users)
+        if user:
+            dashboard(users, user)
 
     elif choice == "3":
         user_view(users)

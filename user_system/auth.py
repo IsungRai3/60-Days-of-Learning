@@ -44,7 +44,7 @@ def login_user(users):
         for user in users:
             if user["username"] == username and user["password"] == hashed_pass:
                 print(f"Welcome {username}!")
-                return
+                return username
         attempt -= 1
         print(f"Invalid credentials. Attempts left: {attempt}")
 
@@ -90,3 +90,37 @@ def user_remove(users):
             return
     else:
         print("User not found!")
+
+def dashboard(users, current_user):
+    while True:
+        print(f"\nWelcome, {current_user}")
+        print("1.View profile")
+        print("2.Change password")
+        print("3.Logout")
+
+        choice = input("Enter choice: ")
+
+        if choice == "1":
+            print(f"Username: {current_user}")
+
+        elif choice == "2":
+            new_pass = input("Enter new password: ").strip()
+
+            if new_pass == "":
+                print("Password cannot be empty!")
+                continue
+            
+            for user in users:
+                if user["username"] == current_user:
+                    user["password"] = hash_password(new_pass)
+                    save_users(users)
+                    print("Password changed successfully!")
+                    break
+
+
+        elif choice == "3":
+            print("Logged out!")
+            break
+        else:
+            print("Invalid choice!")
+
